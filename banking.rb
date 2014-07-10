@@ -3,6 +3,11 @@
 class Bank
   attr_accessor :withdrawal, :deposit, :users, :balance, :bname
   @@accounts = {}
+
+  def self.accounts
+    @@accounts
+  end
+
   def initialize(bname)
     @bname = bname
     @users = Hash.new           #Hash to hold users as keys and balances as values
@@ -12,7 +17,7 @@ class Bank
 
   def open_account(person, balance = 0)
     @users[person] = balance
-    @@accounts.store(@bname, users)
+    @@accounts[@bname]= users
     @balance = balance
     person.cash -= @users[person]
     puts "#{person.name}, thanks for opening an account at #{@bname} with $#{@users[person]}!"
@@ -79,3 +84,5 @@ chase.transfer(randy, wells_fargo, 70)
 puts "=========="
 chase.deposit(randy, 150)
 chase.withdrawal(randy, 100)
+#puts "Accounts: #{Bank.accounts}"
+#p Bank.accounts #=> Same as above method call
